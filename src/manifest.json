@@ -4,7 +4,7 @@
     "version": "1.0",
     "manifest_version": 2,
     "description": "GNU Terry Pratchett. Show user when 'X-Clacks-Overhead' appears in html headers.",
-    "author": "Peter Bell"
+    "author": "Peter Bell",
     "background" : {
         "scripts": ["background.js"],
         "persistent": true
