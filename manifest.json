@@ -16,6 +16,7 @@
             "19": "images/icon38.png",
             "38": "images/icon38.png"
          },
-         "default_title": "X-Clacks-Overhead"
+         "default_title": "X-Clacks-Overhead",
+         "default_popup": "popup.html"
     }
 }
