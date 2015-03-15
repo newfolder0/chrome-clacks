@@ -10,6 +10,15 @@ I have never written a browser extension before and have no idea if this one
 could be optimised or if it will slow your browser down appreciably. I take no
 responsibility for that but am completely open to suggestions on improvements.
 
+The icon could do with improvement, I drew it in an MS Paint clone.
+
+My use of callbacks is a bit clumsy, due to inexperience. It has gotten worse
+since I tried to convert the whole thing to running on an 'events page' instead
+of a 'background page' (I'm not even sure I'm using the terminology correctly).
+I ultimately failed because it all relies on a
+chrome.webRequest.onHeadersReceived listener - webRequest can't be used with an
+events page.
+
 I don't know anything about licences so I'm including one offered by Github just
 in case because it seems pretty reasonable. This is a simple extension and a
 tribute to Terry so I'm not really worried what you do with it.

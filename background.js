@@ -2,7 +2,6 @@ var clacks = {};
 
 // return clacks headers, called by popup to get them for display
 function getClacks(tabId) {
-    console.log(clacks[tabId]);
     return clacks[tabId];
 }
 
@@ -46,8 +45,3 @@ chrome.tabs.onUpdated.addListener(function(tabId, change) {
         });
     }
 });
-
-// // show popup when icon is clicked
-// chrome.pageAction.onClicked.addListener(function(tab) {
-//     chrome.pageAction.setPopup({"tabId":tab.id, "popup":"popup.html"});
-// })
