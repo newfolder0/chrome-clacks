@@ -1,8 +1,10 @@
 {
-    "name": "Clacks",
+    "name": "Clacks Overhead",
+    "short_name": "Clacks",
     "version": "1.0",
     "manifest_version": 2,
-    "description": "Show user when 'X-Clacks-Overhead' appears in html headers.",
+    "description": "GNU Terry Pratchett. Show user when 'X-Clacks-Overhead' appears in html headers.",
+    "author": "Peter Bell"
     "background" : {
         "scripts": ["background.js"],
         "persistent": true

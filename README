@@ -10,7 +10,8 @@ I have never written a browser extension before and have no idea if this one
 could be optimised or if it will slow your browser down appreciably. I take no
 responsibility for that but am completely open to suggestions on improvements.
 
-The icon could do with improvement, I drew it in an MS Paint clone.
+The icon could do with improvement, I drew it in an MS Paint clone. It's
+supposed to look a bit like a signalling lantern.
 
 My use of callbacks is a bit clumsy, due to inexperience. It has gotten worse
 since I tried to convert the whole thing to running on an 'events page' instead
