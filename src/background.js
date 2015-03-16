@@ -11,21 +11,20 @@ chrome.webRequest.onHeadersReceived.addListener(
         var tabId = details.tabId,
             newClacks;
 
-        // get response headers and store those tagged as clacks overhead
-        newClacks = details.responseHeaders.filter(function(header) {
-                if (header.name === "X-Clacks-Overhead" || header.name === "Clacks-Overhead")
-                    return true;
-                else return false;
-        });
+        // tabId will be -1 if request isn't related to a tab - ignore
+        if (tabId >= 0) {
+            // get response headers and store those tagged as clacks overhead
+            newClacks = details.responseHeaders.filter(function(header) {
+                    if (header.name === "X-Clacks-Overhead" || header.name === "Clacks-Overhead")
+                        return true;
+                    else return false;
+            });
 
-        // if clacks headers are present, store
-        if (newClacks.length > 0) {
-            clacks[tabId] = newClacks;
+            // if clacks headers are present, store
+            if (newClacks.length > 0) {
+                clacks[tabId] = newClacks;
+            }
         }
-
-        // console.log("length: ", clacks.length);
-        // console.log(details.responseHeaders);
-        // console.log(clacks[tabId]);
     },
 
     {urls: ["<all_urls>"]},
@@ -45,4 +44,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, change) {
             }
         });
     }
+});
+
+// drop a clacks header once the relevant tab is closed
+chrome.tabs.onRemoved.addListener(function (tabId) {
+    if (clacks[tabId]) delete clacks[tabId];
 });
