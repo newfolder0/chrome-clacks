@@ -13,7 +13,8 @@ chrome.webRequest.onHeadersReceived.addListener(
 
         // get response headers and store those tagged as clacks overhead
         newClacks = details.responseHeaders.filter(function(header) {
-                if (header.name === "X-Clacks-Overhead") return true;
+                if (header.name === "X-Clacks-Overhead" || header.name === "Clacks-Overhead")
+                    return true;
                 else return false;
         });
 

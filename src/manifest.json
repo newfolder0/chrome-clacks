@@ -1,6 +1,6 @@
 {
-    "name": "Clacks Overhead",
-    "short_name": "Clacks",
+    "name": "Clacks Overhead - GNU Terry Pratchett",
+    "short_name": "Clacks Overhead",
     "version": "1.0",
     "manifest_version": 2,
     "description": "GNU Terry Pratchett. Show user when 'X-Clacks-Overhead' appears in html headers.",
