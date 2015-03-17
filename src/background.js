@@ -23,15 +23,15 @@ chrome.webRequest.onCompleted.addListener(
             var str = "";
             // Put the values of all of them together in multiple lines.
             // This means we aren't storing unneccessary data, at the cost
-            // of a little extra processing at this point sine we are already looping.
+            // of a little extra processing at this point since we are already looping.
             // Alternatively, just extract the text values, so don't format
             // until display time.
             for (var i=0; i<newClacks.length; i++) {
                 if (i > 0) str += "\n";
                 str += newClacks[i].value;
             };
-            // store the resulting string under its tabs ID.
-            // nb though it displays multiple messages from one request, seperate
+            // Store the resulting string under its tab's ID.
+            // N.B. though it displays multiple messages from one request, separate
             // requests from one page load can still overwrite each other.
             // Note from Pete: I've change += to just = to stop it repeating itself.
             clacks[details.tabId] = str;
