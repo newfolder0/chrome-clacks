@@ -23,6 +23,8 @@ chrome.webRequest.onHeadersReceived.addListener(
             // if clacks headers are present, store
             if (newClacks.length > 0) {
                 clacks[tabId] = newClacks;
+            } else {
+                delete clacks[tabId];
             }
         }
     },
@@ -32,17 +34,17 @@ chrome.webRequest.onHeadersReceived.addListener(
 );
 
 // when tab is updated, check if pageAction icon should show
+// Thanks to /u/C4vey for squashing the bugs!
 chrome.tabs.onUpdated.addListener(function(tabId, change) {
     if (change.status === "complete") {
-        chrome.tabs.query({active: true}, function(tabs) {
-            var tab = tabs[0];
-
-            if (clacks[tab.id]) {
-                chrome.pageAction.show(tab.id);
-            } else {
-                chrome.pageAction.hide(tab.id);
-            }
-        });
+        console.log("this", clacks);
+        if (clacks[tabId]) {
+            console.log(tabId, "show");
+            chrome.pageAction.show(tabId);
+        } else {
+            console.log(tabId, "hide");
+            chrome.pageAction.hide(tabId);
+        }
     }
 });
 
