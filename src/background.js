@@ -1,3 +1,5 @@
+var DEBUG = false;
+
 // Create data store
 var clacks = {},
     shown = {}; // this object is to enable crappy, hacky fix. I'll try and find
@@ -37,15 +39,15 @@ chrome.webRequest.onCompleted.addListener(
                     str += newClacks[i].value;
                 };
 
-                // store the resulting string under its tab's ID.
-                // nb though it displays multiple messages from one request, seperate
+                // Store the resulting string under its tab's ID.
+                // N.B. though it displays multiple messages from one request, seperate
                 // requests from one page load can still overwrite each other.
                 // Note from Pete: I've change += to just = to stop it repeating itself.
                 // - related to premature deletion? - don't think so...
                 clacks[details.tabId] = str;
                 chrome.pageAction.show(details.tabId);
                 shown[details.tabId] = false;
-                console.log("store");
+                if (DEBUG) console.log("store");
             }
         }
     },
@@ -61,7 +63,7 @@ chrome.tabs.onRemoved.addListener(function (tabId) {
 // when tab is updated, check if pageAction icon should show
 chrome.tabs.onUpdated.addListener(function(tabId, change) {
     // if the update is complete, decide if we show the icon.
-    console.log("status: ",change.status);
+    if (DEBUG) console.log("status: ",change.status);
     if (change.status === "complete") {
         // if there is a clacks entry for the UPDATED tab, show icon for that tab.
         if (clacks[tabId]) {
@@ -75,5 +77,5 @@ chrome.tabs.onUpdated.addListener(function(tabId, change) {
         delete shown[tabId];
         chrome.pageAction.hide(tabId);
     }
-    console.log("shown: ",shown[tabId]);
+    if (DEBUG) console.log("shown: ",shown[tabId]);
 });
