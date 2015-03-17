@@ -1,28 +1,19 @@
-// get clacks headers from background script
 var tabId,
-    clacks,
-    str = "";
+    clacks;
 
-chrome.tabs.query({
-    active: true,
-    lastFocusedWindow: true
-}, function(tabs) {
-    tabId = tabs[0].id;
-
-    // poor use of callbacks I think
-    chrome.runtime.getBackgroundPage(function(bg) {
-        clacks = bg.getClacks(tabId);
-
-        // console.log(tabId);
-        // console.log(clacks);
-
-        // build popup text, stacking multiple headers on following lines
-        for (var i = 0; i < clacks.length; i++) {
-            if (i > 0) str += "\n";
-            str += clacks[i].value;
-        }
-
-        // put text in popup.html
-        document.getElementById("text").innerHTML = str;
-    })
-});
+// Get the currently active tab in the focused window.
+chrome.tabs.query(
+    {active: true, lastFocusedWindow: true},
+    function(tabs) {
+        // get the tab ID of that current tab
+        tabId = tabs[0].id;
+        // get clacks headers from background script
+        chrome.runtime.getBackgroundPage(
+            function(bg) {
+                clacks = bg.getClacks(tabId);
+                // put text in popup.html
+                document.getElementById("text").innerHTML = clacks;
+            }
+        );
+    }
+);
