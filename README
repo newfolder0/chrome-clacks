@@ -8,6 +8,8 @@ See here: http://www.gnuterrypratchett.com/
 Contributors:
 -Peter Bell (original author)
 -Charlie Wheeler-Robinson (bug hunting, refactoring, improving everything)
+-Jimmy Nyström (code)
+-See GitHub issues and pull requests for others.
 
 I have never written a browser extension before and have no idea if this one
 could be optimised or if it will slow your browser down appreciably. I take no

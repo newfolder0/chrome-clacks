@@ -12,7 +12,7 @@ chrome.tabs.query(
             function(bg) {
                 clacks = bg.getClacks(tabId);
                 // put text in popup.html
-                document.getElementById("text").innerHTML = clacks;
+                document.getElementById("text").textContent = clacks;
             }
         );
     }

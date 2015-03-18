@@ -18,7 +18,7 @@ chrome.webRequest.onCompleted.addListener(
     function(details) {
         var newClacks,
             // match case-insensitive, with or without 'X-' prefix
-            match = /^(X-)?(Clacks-Overhead)$/i;
+            pattern = /^(X-)?(Clacks-Overhead)$/i;
 
         // ignore background requests (where tabId === -1)
         if (details.tabId >= 0) {
@@ -26,25 +26,19 @@ chrome.webRequest.onCompleted.addListener(
             // get response headers and store those tagged as "Clacks-Overhead"
             // or "X-Clacks-Overhead"
             newClacks = details.responseHeaders.filter(function(header) {
-                    if (match.test(header.name)) return true;
-                    else return false;
-            });
+                    return pattern.test(header.name);
+                }).map(function(header) {
+                    return header.value;
+                }).join("\n");
 
             // if there are any Clacks-Overhead headers.
-            if (newClacks.length > 0) {
-                var str = "";
-
-                for (var i=0; i<newClacks.length; i++) {
-                    if (i > 0) str += "\n";
-                    str += newClacks[i].value;
-                };
-
+            if (newClacks) {
                 // Store the resulting string under its tab's ID.
-                // N.B. though it displays multiple messages from one request, seperate
+                // N.B. though it displays multiple messages from one request, separate
                 // requests from one page load can still overwrite each other.
                 // Note from Pete: I've change += to just = to stop it repeating itself.
                 // - related to premature deletion? - don't think so...
-                clacks[details.tabId] = str;
+                clacks[details.tabId] = newClacks;
                 chrome.pageAction.show(details.tabId);
                 shown[details.tabId] = false;
                 if (DEBUG) console.log("store");
@@ -64,12 +58,11 @@ chrome.tabs.onRemoved.addListener(function (tabId) {
 chrome.tabs.onUpdated.addListener(function(tabId, change) {
     // if the update is complete, decide if we show the icon.
     if (DEBUG) console.log("status: ",change.status);
-    if (change.status === "complete") {
+    if (change.status === "complete" && clacks[tabId]) {
         // if there is a clacks entry for the UPDATED tab, show icon for that tab.
-        if (clacks[tabId]) {
-            chrome.pageAction.show(tabId);
-            shown[tabId] = true;
-        }
+        chrome.pageAction.show(tabId);
+        shown[tabId] = true;
+
     // if the update is loading, clean the clacks entries for the tab and hide the icon.
     // probably doesn't require the if statement.
     } else if (clacks[tabId] && shown[tabId] === true) {
