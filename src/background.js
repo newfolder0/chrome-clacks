@@ -1,4 +1,6 @@
-var DEBUG = false;
+var DEBUG = false,
+    // match case-insensitive, with or without 'X-' prefix
+    match = /^(X-)?(Clacks-Overhead)$/i;
 
 // Create data store
 var clacks = {},
@@ -16,9 +18,7 @@ function getClacks(tabId) {
 // The main listener to check each request's headers for clacks
 chrome.webRequest.onCompleted.addListener(
     function(details) {
-        var newClacks,
-            // match case-insensitive, with or without 'X-' prefix
-            match = /^(X-)?(Clacks-Overhead)$/i;
+        var newClacks;
 
         // ignore background requests (where tabId === -1)
         if (details.tabId >= 0) {
@@ -79,3 +79,18 @@ chrome.tabs.onUpdated.addListener(function(tabId, change) {
     }
     if (DEBUG) console.log("shown: ",shown[tabId]);
 });
+
+chrome.webRequest.onBeforeSendHeaders.addListener(
+    function(details) {
+        var hasclacks = details.requestHeaders.some(function(h) { return h.name.match(match); });
+        
+        if(!hasclacks) {
+            details.requestHeaders.push({name: "X-Clacks-Overhead", value: "GNU Terry Pratchett"});
+        }
+
+        return {requestHeaders: details.requestHeaders};
+    },
+    {urls: ["<all_urls>"]},
+    ["blocking", "requestHeaders"]
+);
+  
