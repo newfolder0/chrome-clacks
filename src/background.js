@@ -1,12 +1,7 @@
 var DEBUG = false;
 
 // Create data store
-var clacks = {},
-    shown = {}; // this object is to enable crappy, hacky fix. I'll try and find
-                // a better solution but without it, it currently doesn't work
-                // with www.gnuterrypratchett.com for example. It does make it
-                // persist for a short time in some cases where it shouldn't
-                // though.
+var clacks = {};
 
 // return clacks headers, called by popup to get them for display
 function getClacks(tabId) {
@@ -39,8 +34,7 @@ chrome.webRequest.onCompleted.addListener(
                 // Note from Pete: I've change += to just = to stop it repeating itself.
                 // - related to premature deletion? - don't think so...
                 clacks[details.tabId] = newClacks;
-                chrome.pageAction.show(details.tabId);
-                shown[details.tabId] = false;
+                chrome.pageAction.show[details.tabId];
                 if (DEBUG) console.log("store");
             }
         }
@@ -49,26 +43,43 @@ chrome.webRequest.onCompleted.addListener(
     ["responseHeaders"]
 );
 
+// clear clacks on navigation to a new page
+chrome.webNavigation.onCommitted.addListener(
+    function(details) {
+        if (details.transitionType !== "auto_subframe") {
+            delete clacks[details.tabId];
+            chrome.pageAction.hide(details.tabId);
+        }
+    }
+);
+
+// listen to messages from content scripts
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        var tabId = sender.tab.id;
+
+        if (request.clacks) {
+            if (clacks[tabId]) clacks[tabId] += "\n" + request.clacks;
+            else clacks[tabId] = request.clacks;
+        }
+
+        // if there is a clacks entry for the loaded tab, show icon for that tab.
+        if (clacks[tabId]) chrome.pageAction.show(tabId);
+        // if (DEBUG) console.log("shown: ", shown[tabId]);
+});
+
 // Keeps the data store clean by deleting entries for tabs when they are closed.
 chrome.tabs.onRemoved.addListener(function (tabId) {
-    if (clacks[tabId]) delete clacks[tabId];
-});
-
-// when tab is updated, check if pageAction icon should show
-chrome.tabs.onUpdated.addListener(function(tabId, change) {
-    // if the update is complete, decide if we show the icon.
-    if (DEBUG) console.log("status: ",change.status);
-    if (change.status === "complete" && clacks[tabId]) {
-        // if there is a clacks entry for the UPDATED tab, show icon for that tab.
-        chrome.pageAction.show(tabId);
-        shown[tabId] = true;
-
-    // if the update is loading, clean the clacks entries for the tab and hide the icon.
-    // probably doesn't require the if statement.
-    } else if (clacks[tabId] && shown[tabId] === true) {
+    if (clacks[tabId]) {
         delete clacks[tabId];
-        delete shown[tabId];
-        chrome.pageAction.hide(tabId);
     }
-    if (DEBUG) console.log("shown: ",shown[tabId]);
 });
+
+// Possible code for filtering duplicate strings
+// function uniqueStrings(list) {
+//     var set = {}, i;
+//     for (i in list) {
+//         set[list[i]] = true;
+//     }
+//     return Object.keys(set);
+// }

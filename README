@@ -11,14 +11,15 @@ Contributors:
 -Peter Bell (original author)
 -Charlie Wheeler-Robinson (bug hunting, refactoring, improving everything)
 -Jimmy Nyström (code)
+-Melanie Wilberforce (icons)
+-Sap1ens, jwakely, Rob Grundy, Amy Atha-Nicholls and Backspindle Games (generously offering new icons)
 -See GitHub issues and pull requests for others.
+
+A big thank you to all of the lovely people who sent new icons (listed above)!
 
 I have never written a browser extension before and have no idea if this one
 could be optimised or if it will slow your browser down appreciably. I take no
 responsibility for that but am completely open to suggestions on improvements.
-
-The icon could do with improvement, I drew it in an MS Paint clone. It's
-supposed to look a bit like a signalling lantern.
 
 I don't know anything about licences so I'm including one offered by Github just
 in case because it seems pretty reasonable. This is a simple extension and a

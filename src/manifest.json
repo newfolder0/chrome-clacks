@@ -1,7 +1,7 @@
 {
     "name": "Clacks Overhead - GNU Terry Pratchett",
     "short_name": "Clacks Overhead",
-    "version": "1.3",
+    "version": "1.4",
     "manifest_version": 2,
     "description": "GNU Terry Pratchett. Show user when 'Clacks-Overhead' appears in HTTP headers.",
     "author": "Peter Bell",
@@ -11,6 +11,7 @@
     },
     "permissions": [
         "<all_urls>",
+        "webNavigation",
         "webRequest"
     ],
     "icons": { "16": "images/melanie_icon16.png",
@@ -23,5 +24,11 @@
          },
          "default_title": "Clacks Overhead",
          "default_popup": "popup.html"
+    },
+    "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
+    ]
 }
