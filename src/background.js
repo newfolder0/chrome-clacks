@@ -8,6 +8,21 @@ function getClacks(tabId) {
     return clacks[tabId];
 };
 
+// safely hide the page action.
+function hidePageAction(tabId) {
+    if (clacks[tabId]) {
+        chrome.pageAction.hide(tabId);
+    }
+}
+
+// safely show the page action.
+function showPageAction(tabId) {
+    if (clacks[tabId]) {
+        chrome.pageAction.show(tabId);
+    }
+}
+
+
 // The main listener to check each request's headers for clacks
 chrome.webRequest.onCompleted.addListener(
     function(details) {
@@ -34,7 +49,7 @@ chrome.webRequest.onCompleted.addListener(
                 // Note from Pete: I've change += to just = to stop it repeating itself.
                 // - related to premature deletion? - don't think so...
                 clacks[details.tabId] = newClacks;
-                chrome.pageAction.show[details.tabId];
+                showPageAction(details.tabId);
                 if (DEBUG) console.log("store");
             }
         }
@@ -48,7 +63,7 @@ chrome.webNavigation.onCommitted.addListener(
     function(details) {
         if (details.transitionType !== "auto_subframe") {
             delete clacks[details.tabId];
-            chrome.pageAction.hide(details.tabId);
+            hidePageAction(details.tabId);
         }
     }
 );
@@ -64,7 +79,7 @@ chrome.runtime.onMessage.addListener(
         }
 
         // if there is a clacks entry for the loaded tab, show icon for that tab.
-        if (clacks[tabId]) chrome.pageAction.show(tabId);
+        if (clacks[tabId]) showPageAction(tabId);
         // if (DEBUG) console.log("shown: ", shown[tabId]);
 });
 
