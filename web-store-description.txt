@@ -14,6 +14,7 @@ Contributors:
 -Jimmy Nyström (code)
 -Melanie Wilberforce (icons)
 -Sap1ens, jwakely, Rob Grundy, Amy Atha-Nicholls and Backspindle Games (generously offering new icons)
+-yousuf811 on Github (squashing bugs)
 -See GitHub issues and pull requests for others.
 
 A big thank you to all of the lovely people who sent new icons (listed above)!
