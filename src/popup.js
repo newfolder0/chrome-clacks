@@ -6,6 +6,11 @@ chrome.tabs.query(
     {active: true, lastFocusedWindow: true},
     function(tabs) {
         console.log("tabs: ", tabs);
+
+        if (!tabs || !tabs.length) {
+            return;
+        }
+
         // get the tab ID of that current tab
         tabId = tabs[0].id;
         // get clacks headers from background script
