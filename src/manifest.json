@@ -19,8 +19,8 @@
           "128": "images/melanie_icon128.png" },
     "page_action": {
         "default_icon": {
-            "19": "images/melanie_icon19.png",
-            "38": "images/melanie_icon38.png"
+            "19": "images/melanie_icon19_disabled.png",
+            "38": "images/melanie_icon38_disabled.png"
          },
          "default_title": "Clacks Overhead",
          "default_popup": "popup.html"

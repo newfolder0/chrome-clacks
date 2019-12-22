@@ -8,18 +8,28 @@ function getClacks(tabId) {
     return clacks[tabId];
 };
 
-// safely hide the page action.
-function hidePageAction(tabId) {
-    if (clacks[tabId]) {
-        chrome.pageAction.hide(tabId);
-    }
+function extinguishClacksIcon(tabId) {
+    chrome.pageAction.hide(tabId)
+    chrome.pageAction.setIcon(
+        {
+            "tabId": tabId,
+            "path": {
+                "19": chrome.extension.getURL("images/melanie_icon19_disabled.png"),
+                "38": chrome.extension.getURL("images/melanie_icon38_disabled.png")
+            }
+        });
 }
 
-// safely show the page action.
-function showPageAction(tabId) {
-    if (clacks[tabId]) {
-        chrome.pageAction.show(tabId);
-    }
+function illuminateClacksIcon(tabId) {
+    chrome.pageAction.show(tabId)
+    chrome.pageAction.setIcon(
+        {
+            "tabId": tabId,
+            "path": {
+                "19": chrome.extension.getURL("images/melanie_icon19.png"),
+                "38": chrome.extension.getURL("images/melanie_icon38.png")
+            }
+        });
 }
 
 
@@ -49,7 +59,7 @@ chrome.webRequest.onCompleted.addListener(
                 // Note from Pete: I've change += to just = to stop it repeating itself.
                 // - related to premature deletion? - don't think so...
                 clacks[details.tabId] = newClacks;
-                showPageAction(details.tabId);
+                illuminateClacksIcon(details.tabId);
                 if (DEBUG) console.log("store");
             }
         }
@@ -63,7 +73,7 @@ chrome.webNavigation.onCommitted.addListener(
     function(details) {
         if (details.transitionType !== "auto_subframe") {
             delete clacks[details.tabId];
-            hidePageAction(details.tabId);
+            extinguishClacksIcon(details.tabId);
         }
     }
 );
@@ -79,7 +89,7 @@ chrome.runtime.onMessage.addListener(
         }
 
         // if there is a clacks entry for the loaded tab, show icon for that tab.
-        if (clacks[tabId]) showPageAction(tabId);
+        if (clacks[tabId]) illuminateClacksIcon(tabId);
         // if (DEBUG) console.log("shown: ", shown[tabId]);
 });
 
