@@ -12,8 +12,7 @@
         "activeTab",
         "tabs",
         "webNavigation",
-        "webRequest",
-        "webRequestBlocking"
+        "webRequest"
     ],
     "host_permissions": [
         "https://*/*",
