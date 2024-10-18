@@ -20,4 +20,4 @@ str = [].slice.call(clacks, 0)
     .join("\n");
 
 // send clacks to background, even if empty, to trigger pageAction check
-chrome.runtime.sendMessage({clacks: str});
+chrome.runtime.sendMessage({clacks: str, action: "setClacks"});
