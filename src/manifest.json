@@ -1,7 +1,7 @@
 {
     "name": "Clacks Overhead - GNU Terry Pratchett",
     "short_name": "Clacks Overhead",
-    "version": "3.0",
+    "version": "3.1.1",
     "manifest_version": 3,
     "description": "GNU Terry Pratchett. Show user when 'Clacks-Overhead' appears in HTTP headers.",
     "author": "Peter Bell",
