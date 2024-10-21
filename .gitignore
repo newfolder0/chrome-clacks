@@ -1,2 +1,17 @@
-src.zip
-temp
+# Node.js dependencies
+node_modules/
+
+# Testing related
+coverage/
+.jest/
+
+# Puppeteer cached Chromium binaries
+.puppeteer/
+
+# OS files
+.DS_Store
+
+# Chrome extension specific
+dist/
+build/
+*.zip

@@ -1,0 +1,17 @@
+{
+  "name": "chrome-clacks",
+  "version": "1.0.0",
+  "description": "NOTE: See paragraph 1 at the bottom of this description regarding required permissions.",
+  "main": "jest-puppeteer.config.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-puppeteer": "^10.1.2",
+    "puppeteer": "^23.6.0"
+  }
+}
